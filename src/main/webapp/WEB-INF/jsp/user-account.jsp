@@ -4,6 +4,47 @@
 
 <h1>${user.name}</h1>
 
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  New Blog
+</button>
+<form:form commandName="blog" cssClass="form-horizontal blogForm">
+<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">Name:</label>
+					<div class="col-sm-10">
+						<form:input path="name" Cssclass="form-control" />
+						<form:errors path="name"/>							
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">URL:</label>
+					<div class="col-sm-10">
+						<form:input path="url" Cssclass="form-control" />
+						<form:errors path="url"/>	
+					</div>
+				</div>				
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <input type="submit" class="btn btn-primary" value ="Save"/>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</form:form>
+
+<br/> <br/>
 <div role="tabpanel">
 
   <!-- Nav tabs -->
@@ -76,5 +117,29 @@
 			$("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
 			$("#modalRemove").modal();
 		});
+		
+		$(".blogForm").validate(
+				{
+					rules: {
+						name: {
+							required: true,
+							minlength: 3
+						},
+						url: {
+							required: true,
+							url: true
+						}
+					},
+					highlight: function(element){
+						$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+					},
+					unhighlight: function(element){
+						$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+					}
+				}
+		
+		);
+		
+		
 	});
 </script>

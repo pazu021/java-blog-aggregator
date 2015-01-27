@@ -44,4 +44,8 @@
 
 	<jpa:repositories base-package="hk.pazu.jba.repository" />
 
+
+	<import resource="security.xml" />
+
+
 </beans>

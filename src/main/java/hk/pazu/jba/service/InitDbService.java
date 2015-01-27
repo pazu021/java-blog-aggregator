@@ -1,12 +1,5 @@
 package hk.pazu.jba.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
 import hk.pazu.jba.entity.Blog;
 import hk.pazu.jba.entity.Item;
 import hk.pazu.jba.entity.Role;
@@ -16,7 +9,15 @@ import hk.pazu.jba.repository.ItemRepository;
 import hk.pazu.jba.repository.RoleRepository;
 import hk.pazu.jba.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Transactional
@@ -44,9 +45,11 @@ public class InitDbService {
 		Role roleAdmin = new Role();
 		roleAdmin.setName("ROLE_ADMIN");
 		roleRepository.save(roleAdmin);
-
 		User userAdmin = new User();
+		userAdmin.setEnabled(true);
 		userAdmin.setName("admin");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		userAdmin.setPassword(encoder.encode("admin"));
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(roleAdmin);
 		roles.add(roleUser);
@@ -65,7 +68,7 @@ public class InitDbService {
 		item1.setLink("https://maxcdn.bootstrapcdn.com/");
 		item1.setPublishedDate(new Date());
 		itemRepository.save(item1);
-		
+
 		Item item2 = new Item();
 		item2.setBlog(blogPazu);
 		item2.setTitle("second");

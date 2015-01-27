@@ -9,7 +9,6 @@
 
 
 <tilesx:useAttribute name="current" />
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -18,13 +17,14 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+	
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+	
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.js"></script>
 
 
 
@@ -46,12 +46,25 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href='<Spring:url value="/" />'>JBA</a>
+				<a class="navbar-brand" href='<spring:url value="/" />'>JBA</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="${current =='index'? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a></li>
-					<li class="${current =='users'? 'active' : ''}"><a href='<spring:url value="/users.html" />'>Users</a></li>
+					<security:authorize access="hasRole('ROLE_ADMIN')">
+						<li class="${current =='users'? 'active' : ''}"><a href='<spring:url value="/users.html" />'>Users</a></li>
+					</security:authorize>
+					<li class="${current =='register'? 'active' : ''}"><a href='<spring:url value="/register.html" />'>Register</a></li>
+					<security:authorize access="! isAuthenticated()">
+						<li class="${current =='login'? 'active' : ''}"><a href='<spring:url value="/login.html" />'>Login</a></li>					
+					</security:authorize>
+					<security:authorize access="isAuthenticated()">
+						<li class="${current =='account'? 'active' : ''}"><a href='<spring:url value="/account.html" />'>My account</a></li>				
+					</security:authorize>	
+					<security:authorize access="isAuthenticated()">
+						<li class="${current =='logout'? 'active' : ''}"><a href='<spring:url value="/logout.html" />'>Logout</a></li>				
+					</security:authorize>				
+
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
