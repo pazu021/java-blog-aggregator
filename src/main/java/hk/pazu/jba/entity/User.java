@@ -5,7 +5,6 @@ import hk.pazu.jba.annotation.UniqueUsername;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ public class User {
 	private Integer id;
 
 	@Size(min = 3, message = "Name must be at least 3 characters!")
-//	@Column(unique = true)
+	// @Column(unique = true)
 	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
